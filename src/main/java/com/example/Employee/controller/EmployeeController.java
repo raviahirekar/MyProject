@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class EmployeeController {
 	EmployeeService employeeService;
 
 	@GetMapping("/Employee")
+	@PreAuthorize("hasRole('view-users')")
 	public List<Employee> getAllEmployee() {
 		return employeeService.getAllEmployee();
 	}
@@ -39,6 +41,7 @@ public class EmployeeController {
 	}
 	
 	@PostMapping("/Employee")
+	@PreAuthorize("hasRole('write-users')")
 	public ResponseEntity<Employee> getAllEmployee(@RequestBody Employee employee) {
 		
 		employeeService.saveEmployee(employee);
